@@ -22,7 +22,7 @@ class CounterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new SWidget(initialState: 0, builder: (ctx, sw) {
+    return new SWidget<int>(initialState: 0, builder: (ctx, sw) {
       return new Scaffold(
         appBar: new AppBar(
           title: new Text(title),
