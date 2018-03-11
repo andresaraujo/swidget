@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:swidget/swidget.dart';
 
@@ -22,32 +25,40 @@ class CounterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new SWidget<int>(initialState: 0, builder: (ctx, sw) {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(title),
-        ),
-        body: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Text(
-                'You have pushed the button this many times:',
+    return new SWidget<CounterModel>(
+        initState: (sw) => sw.setState(new CounterModel(value: 0)),
+        builder: (sw) {
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text(title),
+            ),
+            body: new Center(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text(
+                    'You have pushed the button this many times:',
+                  ),
+                  new Text(
+                    '${sw.state?.value}',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+                ],
               ),
-              new Text(
-                '${sw.state}',
-                style: Theme.of(ctx).textTheme.display1,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: new FloatingActionButton(
-          onPressed: () => sw.setState(sw.state + 1),
-          tooltip: 'Increment',
-          child: new Icon(Icons.add),
-        ),
-      );
-    });
+            ),
+            floatingActionButton: new FloatingActionButton(
+              onPressed: () =>
+                  sw.setState(new CounterModel(value: sw.state.value + 1)),
+              tooltip: 'Increment',
+              child: new Icon(Icons.add),
+            ),
+          );
+        });
   }
 }
 
+@immutable
+class CounterModel {
+  CounterModel({@required this.value});
+  final int value;
+}

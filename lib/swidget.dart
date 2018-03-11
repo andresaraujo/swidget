@@ -5,13 +5,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 
 typedef void SetStateFunction<T>(FutureOr<T> newState);
-typedef Widget WidgetBuilderFunction<T>(
-    BuildContext context, SWidgetContext<T> sw);
+typedef Widget WidgetBuilderFunction<T>(SWidgetContext<T> sw);
+typedef void SWidgetContextCallback<T>(SWidgetContext<T> sw);
 
 class SWidget<T> extends StatefulWidget {
-  SWidget({@required this.initialState, @required this.builder});
+  SWidget({@required this.builder, this.initState});
 
-  final T initialState;
+  final SWidgetContextCallback<T> initState;
   final WidgetBuilderFunction<T> builder;
 
   @override
@@ -23,7 +23,9 @@ class _SWidgetState<T> extends State<SWidget<T>> {
 
   @override
   initState() {
-    _state = widget.initialState;
+    if(widget.initState != null) {
+      widget.initState(new SWidgetContext<T>(state: _state, setState: _setState));
+    }
   }
 
   _setState(FutureOr<T> newState) async {
@@ -37,7 +39,7 @@ class _SWidgetState<T> extends State<SWidget<T>> {
   Widget build(BuildContext context) {
     final sw = new SWidgetContext<T>(state: _state, setState: _setState);
 
-    return widget.builder(context, sw);
+    return widget.builder(sw);
   }
 }
 
