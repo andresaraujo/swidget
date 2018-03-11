@@ -23,6 +23,7 @@ class _SWidgetState<T> extends State<SWidget<T>> {
 
   @override
   initState() {
+    super.initState();
     if(widget.initState != null) {
       widget.initState(new SWidgetContext<T>(state: _state, setState: _setState));
     }
