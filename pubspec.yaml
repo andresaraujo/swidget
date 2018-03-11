@@ -1,0 +1,14 @@
+name: swidget
+description: Make Simple Stateful widgets as a Stateless
+version: 0.0.1
+author:
+homepage:
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  test: ^0.12.0
+
+flutter:
